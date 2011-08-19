@@ -1,0 +1,37 @@
+#!/usr/bin/env python2
+# This file is licensed under the terms of the Apache License, Version 2.0
+# Please see the file COPYING for the full text of this license
+#
+# Copyright 2010-2011 Tagged
+
+import os, os.path, jhm
+
+#TODO: This is half broken, but it's useful.
+#To use:
+#alias jtree='cd `jhm_tree`'
+#jtree
+
+if __name__ != '__main__':
+  raise ValueError("Script cannot be loaded as a module")
+
+try:
+  env = jhm.Env(jhm.GetArgParser().parse_args())
+  #Find the tree we are currently in (Should be SRC or OUT)
+  cwd = os.getcwd()
+  tree = env.FindTree(cwd)
+  rel_path = tree.GetRelPath(cwd)
+
+  #Switch to the opposite tree (SRC/OUT)
+  new_tree = None
+  if tree is env.src_tree:
+    new_tree = env.out_tree
+  elif tree is env.out_tree:
+    new_tree = env.src_tree
+  else:
+    raise ValueError("Not in SRC or OUT tree.")
+  print new_tree.GetAbsPath(rel_path)
+except:
+  #TODO: We kill the branch here...
+  print os.path.expanduser("~/projects/src")
+
+

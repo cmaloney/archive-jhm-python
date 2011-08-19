@@ -1,0 +1,9 @@
+Full rewrite/cleanup because the current model has hit it's limit, and has serious hard to fix internal bugs.
+
+Other things todo:
+Package for Arch, Debian/Ubuntu
+Write man page for jhm, jhm-test, jhm.jhm (conf)
+
+Figure out what exactly jhm-dist (Equivalent of make install) should do, and how to implement it.
+Command to move between trees
+The caching isn't quite optimal at the moment.

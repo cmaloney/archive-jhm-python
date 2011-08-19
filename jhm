@@ -1,0 +1,23 @@
+#!/usr/bin/env python2
+# This file is licensed under the terms of the Apache License, Version 2.0
+# Please see the file COPYING for the full text of this license
+#
+# Copyright 2010-2011 Tagged
+
+import jhm, jhm_test, sys, traceback
+
+if __name__ == "__main__":
+  try:
+    namespace, files = jhm_test.GetArgParser().parse_known_args(sys.argv)
+    namespace.targets += files
+    jhm_test.Env(namespace).Build()
+  except jhm_test.TestError as err:
+    print "Test Error: ",err
+  except jhm.BuildError as err:
+    print "Build Error:", err
+
+    if '--jhm-debug' in sys.argv:
+      traceback.print_tb(sys.exc_traceback)
+
+else:
+  raise ValueError("This script only intended to be run as an executable. Import the jhm python module")
